@@ -61,7 +61,7 @@ public class CalendarServiceTest {
 			events[i].setSummary("Event Summary - " + i);
 			events[i].setDescription("Event Description - " + i);
 			events[i].setOwner(calendarUsers[random.nextInt(numInitialNumUsers)]);
-			switch (i) {				          /* Updated by Assignment 3 */
+			switch (i) {				         
 				case 0:
 					events[i].setNumLikes(0);  							
 					break;
@@ -82,7 +82,7 @@ public class CalendarServiceTest {
 			eventAttentees[i] = new EventAttendee();
 			eventAttentees[i].setEvent(events[i]);
 			eventAttentees[i].setAttendee(calendarUsers[3 * i ]);
-			eventAttentees[i].setAttendee(calendarUsers[3 * i + 1]);
+			eventAttentees[i].setAttendee(calendarUsers[3 * i + 1]);   
 			eventAttentees[i].setAttendee(calendarUsers[3 * i + 2]);
 			eventAttentees[i].setId(calendarService.createEventAttendee(eventAttentees[i]));
 		}

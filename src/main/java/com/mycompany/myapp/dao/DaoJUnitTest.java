@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import com.mycompany.myapp.domain.CalendarUser;
 import com.mycompany.myapp.domain.Event;
 import com.mycompany.myapp.domain.EventAttendee;
+import com.mycompany.myapp.domain.EventLevel;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -19,7 +20,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="../applicationContext.xml")
-
 public class DaoJUnitTest {
 	@Autowired
 	private CalendarUserDao calendarUserDao;	
@@ -44,7 +44,7 @@ public class DaoJUnitTest {
 	public void setUp() {
 		calendarUsers = new CalendarUser[numInitialNumUsers];
 		events = new Event[numInitialNumEvents];
-		eventAttendees = new EventAttendee[numInitialNumEvents];
+		eventAttendees = new EventAttendee[numInitialNumEventAttendees];
 		
 		this.calendarUserDao.deleteAll();
 		this.eventDao.deleteAll();
@@ -62,6 +62,7 @@ public class DaoJUnitTest {
 			events[i] = new Event();
 			events[i].setSummary("Event Summary - " + i);
 			events[i].setDescription("Event Description - " + i);
+
 			events[i].setOwner(calendarUsers[random.nextInt(numInitialNumUsers)]);
 			switch (i) {				          /* Updated by Assignment 3 */
 				case 0:
@@ -78,6 +79,7 @@ public class DaoJUnitTest {
 					break;
 			}
 			events[i].setId(eventDao.createEvent(events[i]));
+			
 		}
 		
 		for (int i = 0; i < numInitialNumEventAttendees; i++) {
@@ -85,7 +87,7 @@ public class DaoJUnitTest {
 			eventAttendees[i].setEvent(events[i % numInitialNumEvents]);
 			eventAttendees[i].setAttendee(calendarUsers[i]);
 			eventAttendees[i].setId(eventAttendeeDao.createEventAttendee(eventAttendees[i]));
-		}
+		}		
 	}
 	
 	@Test
@@ -116,5 +118,10 @@ public class DaoJUnitTest {
 	public void getAllEventAttendees() {
 		// TODO Assignment 3
 		// 각 이벤트 별로 등록된 Attendee 개수가 3인지 확인하는 테스트 코드 
+
+		for (int i = 0; i < numInitialNumEvents; i++) {
+			assertThat(
+					this.eventAttendeeDao.findEventAttendeeByEventId(events[i].getId()).size(), is(3));
+		}
 	}
 }

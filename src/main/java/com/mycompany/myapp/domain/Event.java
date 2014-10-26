@@ -11,6 +11,10 @@ public class Event {
     private int numLikes;                     /* Updated by Assignment 3 */
     private EventLevel eventLevel;            /* Updated by Assignment 3 */
 
+    public Event(){
+    	eventLevel = EventLevel.NORMAL;
+    }
+    
     /* Updated by Assignment 3 - Start */
     public int getNumLikes() {
 		return numLikes;
